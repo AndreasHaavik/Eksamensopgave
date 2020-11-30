@@ -10,13 +10,6 @@ class user {
     }
 }
 
-class login{
-    constructor(userName, passWord){
-        this.userName = userName;
-        this.passWord = passWord;
-    }
-}
-
 class match extends user {
     constructor(user, matchX, matchY){
         super(user)
@@ -25,11 +18,3 @@ class match extends user {
     }
 }
 
-class image {
-    constructor(imageType, imageSize, author, path,){
-        this.imageType = imageType;
-        this.imageSize = imageSize;
-        this.author = author;
-        this.path = path;
-    }
-}
