@@ -9,7 +9,7 @@ class user {
         this.eMail = eMail;
         this.userName = userName;
         this.passWord = passWord;
-        this.picture = picture; 
+        this.picture = picture;
 
     }
 }
