@@ -33,6 +33,18 @@ router.get('/:userId', (req, res, next)=>{
     }
 });
 
+router.patch('/:userId', (req, res, next)=>{
+    res.status(200).json({
+      message: 'Updated userId'  
+    });
+});
+
+router.delete('/:userId', (req, res, next)=>{
+    res.status(200).json({
+      message: 'Deleted userId'  
+    });
+});
+
 
 
 module.exports = router; 
