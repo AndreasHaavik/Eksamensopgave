@@ -1,21 +1,12 @@
-/*
-const express = require("express")
-const router = express ();
-const user = require('//Users/andreashaavik/Desktop/1-Semester/Programmering/Eksamensopgave/Models/User.js')
-*/
-
-// det efterfølgende kode, eksportere jeg mine crud endpoints til mine mine routes mappe, for at få mere dybde i min kode
-// og fuldfører MVC strukturen. 
-
-const user = require("../Models/User");
+const user = require("../Models/userData");
 
 exports.users_get_all = (req, res, next)=>{
-    res.status(200).json({
+    res.status(200).json(user.get,{
         message: 'handling Get request to /users'
     });
 }
 
-exports.users_post_all = (req, res, next)=>{
+exports.users_post = (req, res, next)=>{
     res.status(200).json({
         message: 'handling Post request to /users'
     });

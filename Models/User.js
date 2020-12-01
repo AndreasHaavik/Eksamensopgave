@@ -10,7 +10,6 @@ class user {
         this.userName = userName;
         this.passWord = passWord;
         this.picture = picture;
-
     }
 }
 
@@ -21,4 +20,5 @@ class match extends user {
         this.matchY = matchY;
     }
 }
+
 

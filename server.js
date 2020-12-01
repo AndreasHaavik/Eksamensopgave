@@ -1,10 +1,14 @@
 const express  = require('express');
 const API = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+const bodyParser = require('body-parser');
+const fs = require('fs');
 
 API.listen(PORT);
-const usersRoutes = require('./routes/users');
+const usersRoutes = require('./routes/users', API, fs);
 
+API.use(bodyParser.json());
+API.use(bodyParser.urlencoded({extended: true}))
  
 API.use('/users', usersRoutes);
 
