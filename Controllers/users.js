@@ -1,14 +1,19 @@
 const user = require("../Models/userData");
 
 exports.users_get_all = (req, res, next)=>{
-    res.status(200).json(user.get,{
+    res.status(200).json({
         message: 'handling Get request to /users'
     });
 }
-
+// dette faktum er ikke super vigtigt men normal når man har en stauts 201, betyder det "created success status"
 exports.users_post = (req, res, next)=>{
-    res.status(200).json({
-        message: 'handling Post request to /users'
+    const user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    };
+    res.status(201).json({
+        message: 'handling Post request to /users',
+        createdUser: user
     });
 }
 // hvis jeg vil have information om en enkelt user, via hans userID, skal jeg også bruge en get req,
