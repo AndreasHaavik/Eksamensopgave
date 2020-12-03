@@ -3,7 +3,14 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     firstName: String,
-    lastName: String  
+    lastName: String,
+    gender: String,
+    age: {type: Number, required: true},
+    interests: String, 
+    address: String, 
+    eMail: String,
+    userName: String,
+    passWord: {type: Number, required: true},
 });
 
 module.exports = mongoose.model('User', userSchema);
@@ -17,7 +24,7 @@ module.exports = mongoose.model('User', userSchema);
 
 
 
-
+/*
 class user {
     constructor(firstName, lastName, gender, age, interest, location, eMail, userName, passWord,picture){
         this.firstName = firstName;
@@ -40,6 +47,6 @@ class match extends user {
         this.matchY = matchY;
     }
 }
-
+*/
 
 

@@ -1,4 +1,5 @@
-const user = require("../Models/userData");
+const User = require("../Models/User");
+const mongoose = require('mongoose')
 
 exports.users_get_all = (req, res, next)=>{
     res.status(200).json({
@@ -7,15 +8,28 @@ exports.users_get_all = (req, res, next)=>{
 }
 // dette faktum er ikke super vigtigt men normal når man har en stauts 201, betyder det "created success status"
 exports.users_post = (req, res, next)=>{
-    const user = {
+    const user = new User ({
+        _id: new mongoose.Types.ObjectId(),
         firstName: req.body.firstName,
         lastName: req.body.lastName
-    };
-    res.status(201).json({
-        message: 'handling Post request to /users',
-        createdUser: user
+    });
+    user
+    .save()
+    .then(result => {
+        console.log(result)
+        res.status(201).json({
+            message: 'handling Post request to /users',
+            createdUser: result
+        });
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
     });
 }
+
 // hvis jeg vil have information om en enkelt user, via hans userID, skal jeg også bruge en get req,
 // men her er der en anden fremgangsmåde med et if, else statement
 //----//
