@@ -5,41 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meet-up dating applikation</title>
-    <link rel="stylesheet" href="index.css">
-    <script src="localstorage.js" defer></script>
+    <link rel="stylesheet" href="/View/index.css" type= "text/css">
+    <script src="server.js" ></script>
 </head>
 <body>
 
 <div class = "sign-up-form">
     <h1> Sign up now</h1>
-    <form action='myurl' method='POST' name='myForm'>
-        <div class ="input">
+    <form method='POST' content ="content-type" action ="/">
+        <div class ="sign-up">
             <img src = "/View/img/usericon.png">
-            <input type="name" id="nameInput" class="input-box" placeholder="Your Name">
-            <input type="lastName" id="lastNameInput" class="input-box" placeholder="Your Last Name">
-            <input type="address" id="addressInput" class="input-box" placeholder="Your Address">
-            <input type="gender" id="genderInput" class="input-box" placeholder="Gender">
-            <input type="interest" id="interestInput" class="input-box" placeholder="Your Interest">
-            <input type="email" id="emailInput" class="input-box" placeholder="Your Email">
-        
-            <input type="passWord" id="passWordInput" class="input-box" placeholder="Your Password">
-<!-- 
-            <input type="file" id="fileInput" class="input-box" placeholder="Pick your image">
-            <input type="submit" id="submitImage" value="submit">
-        -->
+            <input name="firstName" id="FirstNameInput" class="input-box" placeholder="Your Firstmname">
+            <input name="lastName" id="lastNameInput" class="input-box" placeholder="Your Last Name">
+            <input name="age" id="ageInput" class="input-box" placeholder="Your Age">
+            <input name="address" id="addressInput" class="input-box" placeholder="Your Address">
+            <input name="gender" id="genderInput" class="input-box" placeholder="Gender">
+            <input name="interest" id="interestInput" class="input-box" placeholder="Your Interest">
+            <input type="eMail" name="eMail" id="emailInput" class="input-box" placeholder="Your Email">
+            <input name="userName" id="userNameInput" class="input-box" placeholder="Your Username">
+            <input type="password" name="passWord" id="passWordInput" class="input-box" placeholder="Your Password">
     </div>
             <p><span><input type ="checkbox"></span>I agree to the terms of the services</p>
-            <input type="submit" id ="signEverything-btn" class="signUp-btn" value ="submit">Sign up</button>
+            <input type="submit" id ="signEverything-btn" class="signUp-btn" value ="Sign up"></button>
             <hr>
             <p class="or">OR</p>
-            <input type="button" class="facebook-btn">Facebook</button>
-            <p>Do you have an account ? <a href="#">Sign in</a></p>
+            <input type="button" class="facebook-btn" value= "Faceboob"></button>
+            <p>Do you have an account ? <a href="sign-in.html">Log in</a></p>
+
+
        
 
 
     </form>
 </div>
-
 
     
 </body>

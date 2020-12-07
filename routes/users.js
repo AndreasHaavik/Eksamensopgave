@@ -1,3 +1,4 @@
+/*
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
@@ -22,9 +23,11 @@ router.post('/', userControllers.users_post);
 //router.delete('/:userId', userControllers.userId_delete);
 /*----------------(VIGTIG KODE TIL MINE CONTROLLERS TIL SENERE)*/
 
-const User = require('../Models/User');
+
+// const User = require('../Models/User');
 // det her er når man skal have alle mine users frem
-router.get('/', (req, res, next)=>{
+/*
+router.get('/allUsers', (req, res, next)=>{
     User.find()
     .select('firstName lastName gender age interests address eMail userName passWord _id')
     .exec()
@@ -51,6 +54,8 @@ router.get('/', (req, res, next)=>{
                }
            })
        };
+
+
     //      if (docs.length >= 0 ){
             res.status(200).json(response);
     //       }else {
@@ -67,11 +72,14 @@ router.get('/', (req, res, next)=>{
         });
     });
 });
+*/
 
 // dette faktum er ikke super vigtigt men normal når man har en stauts 201, betyder det "created success status"
 // dette er når man laver / creater en bruger 
 
-router.post('/', (req, res, next)=>{
+
+/*
+router.post('/user', (req, res, next)=>{
     const user = new User ({
         _id: new mongoose.Types.ObjectId(),
         firstName: req.body.firstName,
@@ -84,10 +92,8 @@ router.post('/', (req, res, next)=>{
         userName: req.body.userName,
         passWord: req.body.passWord
     });
-    user
-        .save()
-        .then(result => {
-         console.log(result)
+    user.save()
+    .then(result => {
         res.status(201).json({
             message: 'We have now created a new user successfully!',
             createdUser: {
@@ -116,6 +122,7 @@ router.post('/', (req, res, next)=>{
         })
     });
 });
+*/
 
 
 // hvis jeg vil have information om en enkelt user, via hans userID, skal jeg også bruge en get req,
@@ -124,11 +131,13 @@ router.post('/', (req, res, next)=>{
 // inden min IF statement laver jeg en variable id som jeg bruger i min IF statement, som indikere,
 // at hvis min id = Andreas99 skrives den første besked ud, men hvis man ID ikke er Andreas99, skrives den anden besked ud. 
 
+/*
+
 // get et bestemt ID route
 router.get('/:userId',(req, res, next)=>{
     const id = req.params.userId;
     User.findById(id)
-    .select('firstName lastName gender age interests address eMail userName passWord _id')
+    .select()
     .exec()
     .then(doc => {
         console.log("from database", doc);
@@ -152,6 +161,8 @@ router.get('/:userId',(req, res, next)=>{
         res.status(500).json({error: err})
     });
 });
+
+
 // Patch / update route
 router.patch('/:userId',(req, res, next)=>{
     const id = req.params.userId;
@@ -203,6 +214,6 @@ router.delete ('/:userId',(req, res, next)=>{
         });
 });
 
-
-module.exports = router; 
+*/
+//module.exports = router; 
 
