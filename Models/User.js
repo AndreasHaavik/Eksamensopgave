@@ -17,8 +17,6 @@ module.exports = mongoose.model('User', userSchema);
 
 
 
-
-
 class user {
     constructor(firstName, lastName, gender, age, interest, eMail, userName, passWord,){
         this.firstName = firstName;

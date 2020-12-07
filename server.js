@@ -4,24 +4,40 @@ const PORT = process.env.PORT || 3001;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+
+const User = require('./Models/User');
+
 app.listen(PORT);
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+
+
+
 mongoose.connect('mongodb+srv://Meet-up:PIVIANST05A@eksamensopgave.uyuzl.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true }, { useUnifiedTopology: true });
 
 // her requiere jeg fra min routes mappe, men den her linje skriver jeg ud. HUSK DENNE KODE!!
-const usersRoutes = require('./routes/users')
+// const usersRoutes = require('./routes/users')
 
 // denne kode skulle meget gerne have at min css er statisk
 app.use('/View', express.static('View'));
 
-// get req til at forbinde med mit frontend 
-app.get('/', function(req, res ){
+// get req til at forbinde med mit mit index.html side 
+app.get('/sign-up', function(req, res ){
     res.sendFile(__dirname + "/View/Index.html")
 })
+// get req til at forbinde med mit sign-in.html side 
+app.get('/', function(req, res){
+    res.sendFile(__dirname + "/View/sign-in.html")
+})
 
-const User = require('./Models/User');
+app.get('/updateUser', function(req, res){
+    res.sendFile(__dirname + "/View/user.html")
+})
+
+
+
 
 // get req over alle users
 app.get('/allUsers', (req, res, next)=>{
@@ -46,7 +62,7 @@ app.get('/allUsers', (req, res, next)=>{
                    request: {
                        type: 'GET',
                        description: 'GET YOUR USER',
-                       url: 'http://localhost:3001/users/' + doc._id
+                       url: 'http://localhost:3001/' + doc._id
                    }
                }
            })
@@ -67,6 +83,7 @@ app.get('/allUsers', (req, res, next)=>{
     });
 });
 
+
 // POST REQ SERVER EKSEMPEL SCREEN
 app.post("/", function(req, res){
     const newUser = new User ({
@@ -82,10 +99,13 @@ app.post("/", function(req, res){
         passWord: req.body.passWord
     });
     newUser.save();
-    res.redirect("/")
+    res.redirect("/updateUser")
 });
 
-app.get('/userId', function(req, res, next){
+
+
+// get req på en bestemt user 
+app.get('/:userId', function(req, res, next){
     const id = req.params.userId;
     User.findById(id)
     .select()
@@ -98,7 +118,7 @@ app.get('/userId', function(req, res, next){
                 request: {
                     type: 'GET',
                     description: 'DIRECT LINK TO ALL THE USERS',
-                    url: 'http://localhost:3001/users/' 
+                    url: 'http://localhost:3001/allUsers/' 
                 }
             })
         } else {
@@ -165,26 +185,6 @@ app.delete ('/:userId', function(req, res, next){
 });
 
 
-
-
-/*
-// SERVER CONST USER SCREEN EKSEMPEL 
-const userSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    firstName: String,
-    lastName: String,
-    gender: String,
-    age: {type: Number, required: true},
-    interests: String, 
-    address: String, 
-    eMail: String,
-    userName: String,
-    passWord: {type: Number, required: true},
-    });
-
-const User = mongoose.model('User', userSchema);
-*/
-
 // her tillader jeg at alle client har adgang til mit rest API ved brug af '*'
 // dvs at i mit app.use tillader browser til at benytte mit API og sørger for at vi ikke får CORS fejl, ved brug af "res.header"
 app.use((req, res, next) =>{
@@ -202,8 +202,6 @@ app.use((req, res, next) =>{
 
 // når jeg får en error senere i min kode, er det fedt at kunne håndtere det med noget javascript, og den derfor skriver en 404 error ud. 
 // det min app.use gør er at hvis jeg ikke har nogle endpoints/request, fx /users, ved jeg at den skal skrive en fejl
-
-
 app.use((req, res, next) => {
     const error = new Error ('Not found')
     error.status = 404;
