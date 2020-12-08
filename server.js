@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 
 const User = require('./Models/User');
+const { db } = require('./Models/User');
 
 app.listen(PORT);
 
@@ -33,8 +34,29 @@ app.get('/', function(req, res){
 })
 
 app.get('/updateUser', function(req, res){
-    res.sendFile(__dirname + "/View/user.html")
+    res.sendFile(__dirname + "/View/userUpdate.html")
 })
+
+
+/*
+app.post("/login", function(req, res ){
+    db.users.find.one(
+        {},
+        {userName: req.body.userName, passWord: req.body.passWord}
+    )
+    if(db.users.find.ond() == null) 
+        return ("users not found")
+
+    else {
+    window.localStorage.setItem("userName", req.body.userName)
+    window.localStorage.setItem("passWord", req.body.userName)
+    }
+});
+*/
+
+
+
+ 
 
 
 
@@ -105,9 +127,9 @@ app.post("/", function(req, res){
 
 
 // get req på en bestemt user 
-app.get('/:userId', function(req, res, next){
-    const id = req.params.userId;
-    User.findById(id)
+app.get('/:userName', function(req, res, next){
+    const userName = req.params.userName;
+    User.findOne({userName: userName})
     .select()
     .exec()
     .then(doc => {
@@ -134,46 +156,38 @@ app.get('/:userId', function(req, res, next){
 });
 
 // Patch / update route
-app.patch('/:userId',function(req, res, next){
-    const id = req.params.userId;
+app.patch('/:userName',function(req, res, next){
+    const userName = req.params.userName;
     const updateOps = {};
     for(const ops of req.body){
         updateOps[ops.propName] = ops.value;
     }
-    User.update({_id: id}, { $set: updateOps})
+    User.update({userName: userName}, { $set: updateOps})
     .exec()
     .then(result => {
         res.status(200).json({
             message: 'User is updated',
-            request: {
-                type: 'GET',
-                description: 'DIRECT LINK TO ALL THE USERS',
-                url: 'http://localhost:3001/users/' + id
-            }
+            })
         })
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json({
-            error:err
+        .catch(err => { 
+            console.log(err);
+            res.status(500).json({
+                error: err
         });
     });
-});
+})
+   
+
+
 
 // delete route
-app.delete ('/:userId', function(req, res, next){
-    const id = req.params.userId;
-    User.remove({_id: id})
+app.delete ('/:userName', function(req, res, next){
+    const userName = req.params.userName;
+    User.remove({userName: userName})
         .exec()
         .then(result => {
             res.status(200).json({
                 message: 'User is deleted',
-                request: {
-                    type: 'POST',
-                    description: 'CLICK THE LINK TO MAKE A NEW USER',
-                    url: 'http://localhost:3001/users/',
-                    newUser: {firstName: "String", lastname: "String", gender: "String", age: "Number", interests: "String", address: "String and Number" , eMail: "String and Number", userName: "String and Number", passWord: "String and Number"}
-                }
             });
         })
         .catch(err => { 

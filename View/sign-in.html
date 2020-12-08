@@ -11,19 +11,51 @@
 <body>
 <div class = "sign-in-form">
     <h1> Log in</h1>
-    <form method='POST' content = "content-type" class = "container">
+    <form method='POST' content = "content-type" class = "container" action="/">
         <div class ="sign-up">
             <img src = "/View/img/usericon.png">
             <input name="userName" type="userName" id="userNameInput" class="input-box" placeholder="Your Username">
             <input name="passWord" type="passWord" id="passWordInput" class="input-box" placeholder="Your Password">
     </div>
             <p><span><input type ="checkbox"></span>I agree to the terms of the services</p>
-            <input type="submit" id ="signEverything-btn" class="signUp-btn" value ="Log in">Log in</button>
+            <input type="submit" id ="btn" class="signUp-btn" value ="Log in">Log in</button>
 
             <a href ="/View/Index.html"> New member? please sign up here</a>
        
     </form>
 </div>
+
+
+<script>
+
+window.addEventListener("load", function storageLogin(){
+    localStorage.getItem("userName")
+    localStorage.getItem("passWord")
+}) if("userName" == null || "passWord" == null)
+return "please enter valid username and password"
+else {
+    
+}
+
+
+</script>
+
+
+<script>
+
+const login = (ev) => {
+        ev.preventDefault();
+    const User = {
+      userName: document.getElementById('userNameInput'), 
+      passWord: document.getElementById('passWordInput') 
+    }
+// her skal jeg have en post req til min server 
+};
+
+document.getElementById("btn").addEventListener('click', User)
+
+</script>
+
 
     
 </body>
