@@ -17,25 +17,17 @@ module.exports = mongoose.model('User', userSchema);
 
 
 
-class user {
-    constructor(firstName, lastName, gender, age, interest, eMail, userName, passWord,){
+class User {
+    constructor(firstName, lastName, gender, age, address, interests, eMail, userName, passWord,){
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age; 
-        this.interest = interest;
+        this.address = address;
+        this.interests = interests;
         this.eMail = eMail;
         this.userName = userName;
         this.passWord = passWord;
     }
 }
-
-class match extends user {
-    constructor(user, matchX, matchY){
-        super(user)
-        this.matchX = matchX;
-        this.matchY = matchY;
-    }
-}
-
 

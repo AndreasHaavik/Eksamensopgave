@@ -28,21 +28,23 @@
 
 <script>
 
-window.addEventListener("load", function storageLogin(){
-    localStorage.getItem("userName")
-    localStorage.getItem("passWord")
-}) if("userName" == null || "passWord" == null)
-return "please enter valid username and password"
-else {
-    
-}
+window.addEventListener("DOMContentLoaded", function storageLogin(){
 
+    var userName = localStorage.getItem("userName")
+    var passWord = localStorage.getItem("passWord")
+
+}); if ("userName" == null || "passWord" == null) {
+alert( "Please login to proceed!")
+
+}else{
+location.href = "http://localhost:3001/userInformation"
+};
 
 </script>
 
 
 <script>
-
+ 
 const login = (ev) => {
         ev.preventDefault();
     const User = {
@@ -53,6 +55,8 @@ const login = (ev) => {
 };
 
 document.getElementById("btn").addEventListener('click', User)
+
+
 
 </script>
 

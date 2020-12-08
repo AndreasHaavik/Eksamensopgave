@@ -1,203 +1,20 @@
 const express  = require('express');
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = 3002;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
-
-const User = require('./Models/User');
-const { db } = require('./Models/User');
+const cors = require("cors")
+app.use(cors())
 
 app.listen(PORT);
 
-app.use(bodyParser.urlencoded({extended: true}));
-
-
-
-
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json())
 
 mongoose.connect('mongodb+srv://Meet-up:PIVIANST05A@eksamensopgave.uyuzl.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true }, { useUnifiedTopology: true });
 
-// her requiere jeg fra min routes mappe, men den her linje skriver jeg ud. HUSK DENNE KODE!!
-// const usersRoutes = require('./routes/users')
 
-// denne kode skulle meget gerne have at min css er statisk
-app.use('/View', express.static('View'));
-
-// get req til at forbinde med mit mit index.html side 
-app.get('/sign-up', function(req, res ){
-    res.sendFile(__dirname + "/View/Index.html")
-})
-// get req til at forbinde med mit sign-in.html side 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + "/View/sign-in.html")
-})
-
-app.get('/updateUser', function(req, res){
-    res.sendFile(__dirname + "/View/userUpdate.html")
-})
-
-
-/*
-app.post("/login", function(req, res ){
-    db.users.find.one(
-        {},
-        {userName: req.body.userName, passWord: req.body.passWord}
-    )
-    if(db.users.find.ond() == null) 
-        return ("users not found")
-
-    else {
-    window.localStorage.setItem("userName", req.body.userName)
-    window.localStorage.setItem("passWord", req.body.userName)
-    }
-});
-*/
-
-
-
- 
-
-
-
-
-// get req over alle users
-app.get('/allUsers', (req, res, next)=>{
-    User.find()
-    .select('firstName lastName gender age interests address eMail userName passWord _id')
-    .exec()
-    .then(docs => {
-       const response = {
-           count: docs.length,
-           users: docs.map(doc => {
-               return {
-                   firstName: doc.firstName,
-                   lastName: doc.lastName,
-                   gender: doc.gender,
-                   age: doc.age,
-                   interests: doc.intersts,
-                   address: doc.address,
-                   eMail: doc.eMail,
-                   userName: doc.userName,
-                   passWord: doc.passWord,
-                   _id: doc._id,
-                   request: {
-                       type: 'GET',
-                       description: 'GET YOUR USER',
-                       url: 'http://localhost:3001/' + doc._id
-                   }
-               }
-           })
-       };
-    //      if (docs.length >= 0 ){
-            res.status(200).json(response);
-    //       }else {
-    //        res.status(404).json({
-    //        message: 'no users found'
-    //      })
-    //  } //---------> man kunne have skrevet ene 404 error hvis der ikke var nogen users, via en if else statement  
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-        });
-    });
-});
-
-
-// POST REQ SERVER EKSEMPEL SCREEN
-app.post("/", function(req, res){
-    const newUser = new User ({
-        _id: new mongoose.Types.ObjectId(),
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        age: req.body.age,
-        interests: req.body.interests,
-        address: req.body.address,
-        eMail: req.body.eMail,
-        userName: req.body.userName,
-        passWord: req.body.passWord
-    });
-    newUser.save();
-    res.redirect("/updateUser")
-});
-
-
-
-// get req på en bestemt user 
-app.get('/:userName', function(req, res, next){
-    const userName = req.params.userName;
-    User.findOne({userName: userName})
-    .select()
-    .exec()
-    .then(doc => {
-        console.log("from database", doc);
-        if(doc) {
-            res.status(200).json({
-                user: doc,
-                request: {
-                    type: 'GET',
-                    description: 'DIRECT LINK TO ALL THE USERS',
-                    url: 'http://localhost:3001/allUsers/' 
-                }
-            })
-        } else {
-            res.status(404).json({
-                message: 'no valid id number register'
-            });
-        }
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({error: err})
-    });
-});
-
-// Patch / update route
-app.patch('/:userName',function(req, res, next){
-    const userName = req.params.userName;
-    const updateOps = {};
-    for(const ops of req.body){
-        updateOps[ops.propName] = ops.value;
-    }
-    User.update({userName: userName}, { $set: updateOps})
-    .exec()
-    .then(result => {
-        res.status(200).json({
-            message: 'User is updated',
-            })
-        })
-        .catch(err => { 
-            console.log(err);
-            res.status(500).json({
-                error: err
-        });
-    });
-})
-   
-
-
-
-// delete route
-app.delete ('/:userName', function(req, res, next){
-    const userName = req.params.userName;
-    User.remove({userName: userName})
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                message: 'User is deleted',
-            });
-        })
-        .catch(err => { 
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
+const userRouter = require('./routes/users')
 
 // her tillader jeg at alle client har adgang til mit rest API ved brug af '*'
 // dvs at i mit app.use tillader browser til at benytte mit API og sørger for at vi ikke får CORS fejl, ved brug af "res.header"
@@ -211,8 +28,9 @@ app.use((req, res, next) =>{
     next();
 });
 
-// routes som skal håndtere request --- DENNE KODER SKAL JEG HUSKE AT TILFØJE IGEN
-// app.use(usersRoutes);
+
+app.use("/Users", userRouter);
+
 
 // når jeg får en error senere i min kode, er det fedt at kunne håndtere det med noget javascript, og den derfor skriver en 404 error ud. 
 // det min app.use gør er at hvis jeg ikke har nogle endpoints/request, fx /users, ved jeg at den skal skrive en fejl
