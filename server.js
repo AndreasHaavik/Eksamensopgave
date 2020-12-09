@@ -15,10 +15,12 @@ mongoose.connect('mongodb+srv://Meet-up:PIVIANST05A@eksamensopgave.uyuzl.mongodb
 
 
 const userRouter = require('./routes/users')
-app.use("/Users", userRouter);
+app.use("/users", userRouter);
 
 // her tillader jeg at alle client har adgang til mit rest API ved brug af '*'
 // dvs at i mit app.use tillader browser til at benytte mit API og sørger for at vi ikke får CORS fejl, ved brug af "res.header"
+// denne kode kan implementeres hvis jeg ikke havde hentet cors module ned på min server
+/*
 app.use((req, res, next) =>{
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Header', '*');
@@ -28,10 +30,7 @@ app.use((req, res, next) =>{
     }
     next();
 });
-
-
-
-
+*/
 
 // når jeg får en error senere i min kode, er det fedt at kunne håndtere det med noget javascript, og den derfor skriver en 404 error ud. 
 // det min app.use gør er at hvis jeg ikke har nogle endpoints/request, fx /users, ved jeg at den skal skrive en fejl

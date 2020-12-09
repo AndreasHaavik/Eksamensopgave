@@ -12,7 +12,7 @@
 
 <div class = "sign-up-form">
     <h1> Sign up now</h1>
-    <form>
+    <form content = "content-type" application = "application/json">
         <div class ="sign-up">
             <img src = "/View/img/usericon.png">
             <input name="firstName" id="firstNameInput" class="input-box" placeholder="Your First Name">
@@ -60,7 +60,7 @@
     //document.querySelector('form').reset();
 
     const Http = new XMLHttpRequest();
-            const url='http://localhost:3002/users';
+            const url='http://localhost:3004/users';
             Http.open("POST", url, true);
             Http.setRequestHeader("Content-Type","application/json")
             var data = JSON.stringify(user)
