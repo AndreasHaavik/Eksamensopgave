@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
@@ -88,8 +87,12 @@ router.post("/login", (req, res, next) => {
         if (User.findOne({username: req.body.username, password: req.body.password}) == null) 
         res("User not found")
         
-            else location.href = "http://127.0.0.1:3001/View/UserInfomation.html" //nyt 
+        else res.redirect("/View/userInformation.html") //nyt 
 });
+
+
+
+
 
 
 
@@ -168,4 +171,3 @@ router.delete ('/:userName', function(req, res, next){
 
 
 module.exports = router; 
-
