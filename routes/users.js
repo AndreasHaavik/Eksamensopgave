@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose')
+
 
 // her importere jeg min User skema fra min model/user
 

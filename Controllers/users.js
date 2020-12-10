@@ -11,7 +11,7 @@ exports.users_get_all = function(req, res, next) {
                 res.status(200).json(response);
                }else {
                 res.status(404).json({
-                    message: 'no users found'
+                    message: 'No users found'
                 });
             }   
         })
@@ -42,7 +42,7 @@ exports.user_post =  function(req, res, next){
         console.log(result);
     })
     .catch(err => console.log(err));
-    res.status(200).json({
+    res.status(201).json({
         message: "Created your user sucessfully",
         createdUser: user
     });
@@ -78,7 +78,7 @@ exports.userName_get = function(req, res, next){
             })
         } else {
             res.status(404).json({
-                message: 'no valid id number register'
+                message: 'no valid userName register'
             });
         }
     })
