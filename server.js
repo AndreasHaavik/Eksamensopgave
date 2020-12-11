@@ -17,6 +17,19 @@ mongoose.connect('mongodb+srv://Meet-up:PIVIANST05A@eksamensopgave.uyuzl.mongodb
 const userRouter = require('./routes/users')
 app.use("/users", userRouter);
 
+
+app.post ("/login", function(req, res, next){
+    User.findOne(
+        {username: req.body.username,
+        password: req.body.password}
+    )
+        if (User.findOne({username: req.body.username, password: req.body.password}) == null) 
+        res("User not found")
+        
+        else res.redirect("/View/userInformation.html") 
+});
+
+
 // her tillader jeg at alle client har adgang til mit rest API ved brug af '*'
 // dvs at i mit app.use tillader browser til at benytte mit API og sørger for at vi ikke får CORS fejl, ved brug af "res.header"
 // denne kode kan implementeres hvis jeg ikke havde hentet cors module ned på min server

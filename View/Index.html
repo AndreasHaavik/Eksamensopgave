@@ -41,7 +41,7 @@
 
 <script>
     const addUser = (ev)=>{
-    ev.preventDefault();  //to stop the form submitting
+    ev.preventDefault();  // jeg stopper min form for at submitte automatisk
     let user = {
     id: Date.now,
     firstName: document.getElementById('firstNameInput').value,
@@ -56,7 +56,7 @@
     };
     console.log(user);
 
-    document.forms[0].reset(); // to clear the form for the next entries
+    document.forms[0].reset(); // her ryder jeg min form for den næste der skal udfylde felterne
     //document.querySelector('form').reset();
 
     const Http = new XMLHttpRequest();
